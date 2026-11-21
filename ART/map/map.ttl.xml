@@ -1,0 +1,41 @@
+<additionals>
+    <tlLogic id="J0" type="static" programID="6" offset="0">
+        <phase duration="9999" state="GGGGGGrrrr"/>
+        <phase duration="9999"  state="yyyyyyrrrr"/>
+        <phase duration="9999"  state="rrrrrrrrrr"/>
+        <phase duration="9999" state="rrrrrrGGGr"/>
+        <phase duration="9999"  state="rrrrrryyyr"/>
+        <phase duration="9999"  state="rrrrrrrrrr"/>
+        <phase duration="9999" state="GGGGGGrrrr"/>
+    </tlLogic>
+    <tlLogic id="J1" type="static" programID="1" offset="0">
+        <phase duration="9999" state="GGGrrrGGG"/>
+        <phase duration="9999"  state="yyyrrryyy"/>
+        <phase duration="9999"  state="rrrrrrrrr"/>
+        <phase duration="9999" state="rrrGGGrrr"/>
+        <phase duration="9999"  state="rrryyyrrr"/>
+        <phase duration="9999"  state="rrrrrrrrr"/>
+        <phase duration="9999" state="GGGrrrGGG"/>
+    </tlLogic>
+    <tlLogic id="J2" type="static" programID="2" offset="0">
+        <phase duration="9999" state="GGGGGG"/>
+        <phase duration="9999"  state="yyyGGG"/>
+        <phase duration="9999" state="rrrGGG"/>
+    </tlLogic>
+    <tlLogic id="J3" type="static" programID="3" offset="0">
+        <phase duration="9999" state="GGGGGG"/>
+        <phase duration="9999"  state="yyyGGG"/>
+        <phase duration="9999" state="rrrGGG"/>
+    </tlLogic>
+    <tlLogic id="J4" type="static" programID="4" offset="0">
+        <phase duration="9999" state="GGGGGG"/>
+        <phase duration="9999"  state="yyyGGG"/>
+        <phase duration="9999" state="rrrGGG"/>
+    </tlLogic>
+    <tlLogic id="J5" type="static" programID="5" offset="0">
+        <phase duration="9999" state="GGGGGG"/>
+        <phase duration="9999"  state="yyyGGG"/>
+        <phase duration="9999" state="rrrGGG"/>
+    </tlLogic>
+
+</additionals>

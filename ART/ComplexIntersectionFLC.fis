@@ -1,0 +1,305 @@
+% MATLAB Fuzzy Inference System (.fis) file
+%
+% Name: ComplexRoundaboutController
+% Description: A fuzzy logic controller for a complex intersection featuring a large
+% roundabout bisected by a major signalized through-road.
+%
+% Goals:
+% 1. Prevent gridlock within the roundabout.
+% 2. Optimize traffic flow and minimize delays.
+% 3. Ensure fairness between the major through-road and roundabout approaches.
+%
+
+% ---------------------------------------------------------------------------
+% [System] Definition
+% Defines the core properties of the fuzzy system.
+% Type: 'mamdani' is used for its intuitive, human-readable rule structure.
+% AndMethod/OrMethod: 'min'/'max' are standard for Mamdani systems.
+% ImpMethod/AggMethod: 'min'/'max' for implication and aggregation.
+% DefuzzMethod: 'centroid' provides a stable and robust crisp output.
+% ---------------------------------------------------------------------------
+[System]
+Name='ComplexRoundaboutController'
+Type='mamdani'
+Version=2.0
+NumInputs=15
+NumOutputs=8
+NumRules=20
+AndMethod='min'
+OrMethod='max'
+ImpMethod='min'
+AggMethod='max'
+DefuzzMethod='centroid'
+
+% ---------------------------------------------------------------------------
+% [Input#] Definitions
+% Defines all sensor inputs to the fuzzy controller.
+% Each input has a Name, a valid numerical Range, and a set of
+% Membership Functions (MFs) that define the linguistic terms.
+% ---------------------------------------------------------------------------
+[Input1]
+Name='Traffic_Flow_Rate_Entry_Rndbt_1'
+Range=[0 60]
+NumMFs=3
+MF1='Low':'trapmf',[0 0 10 25]
+MF2='Medium':'trimf',[15 30 45]
+MF3='High':'trapmf',[35 50 60 60]
+
+[Input2]
+Name='Traffic_Flow_Rate_Entry_Rndbt_2'
+Range=[0 60]
+NumMFs=3
+MF1='Low':'trapmf',[0 0 10 25]
+MF2='Medium':'trimf',[15 30 45]
+MF3='High':'trapmf',[35 50 60 60]
+
+[Input3]
+Name='Traffic_Flow_Rate_Entry_Rndbt_3'
+Range=[0 60]
+NumMFs=3
+MF1='Low':'trapmf',[0 0 10 25]
+MF2='Medium':'trimf',[15 30 45]
+MF3='High':'trapmf',[35 50 60 60]
+
+[Input4]
+Name='Traffic_Flow_Rate_Entry_Rndbt_4'
+Range=[0 60]
+NumMFs=3
+MF1='Low':'trapmf',[0 0 10 25]
+MF2='Medium':'trimf',[15 30 45]
+MF3='High':'trapmf',[35 50 60 60]
+
+[Input5]
+Name='Traffic_Flow_Rate_Roundabout'
+Range=[0 40]
+NumMFs=3
+MF1='Low':'trapmf',[0 0 8 17]
+MF2='Medium':'trimf',[12 22 32]
+MF3='High':'trapmf',[27 35 40 40]
+
+[Input6]
+Name='Occupancy_Approach_50m_1'
+Range=[0 100]
+NumMFs=3
+MF1='Low':'trapmf',[0 0 15 35]
+MF2='Medium':'trimf',[25 50 75]
+MF3='High':'trapmf',[65 85 100 100]
+
+[Input7]
+Name='Occupancy_Approach_50m_2'
+Range=[0 100]
+NumMFs=3
+MF1='Low':'trapmf',[0 0 15 35]
+MF2='Medium':'trimf',[25 50 75]
+MF3='High':'trapmf',[65 85 100 100]
+
+[Input8]
+Name='Occupancy_Approach_50m_3'
+Range=[0 100]
+NumMFs=3
+MF1='Low':'trapmf',[0 0 15 35]
+MF2='Medium':'trimf',[25 50 75]
+MF3='High':'trapmf',[65 85 100 100]
+
+[Input9]
+Name='Occupancy_Approach_50m_4'
+Range=[0 100]
+NumMFs=3
+MF1='Low':'trapmf',[0 0 15 35]
+MF2='Medium':'trimf',[25 50 75]
+MF3='High':'trapmf',[65 85 100 100]
+
+[Input10]
+Name='Presence_Car_Through_Road'
+Range=[0 100]
+NumMFs=3
+MF1='Low_Presence':'trapmf',[0 0 15 35]
+MF2='Medium_Presence':'trimf',[25 50 75]
+MF3='High_Presence':'trapmf',[65 85 100 100]
+
+[Input11]
+Name='Exit_Flow_Rate_Rndbt'
+Range=[0 60]
+NumMFs=3
+MF1='Low':'trapmf',[0 0 10 25]
+MF2='Medium':'trimf',[15 30 45]
+MF3='High':'trapmf',[35 50 60 60]
+
+[Input12]
+Name='Downstream_Occupancy_Exit_1'
+Range=[0 100]
+NumMFs=3
+MF1='Clear':'trapmf',[0 0 10 30]
+MF2='Moderate':'trimf',[20 45 70]
+MF3='Congested':'trapmf',[60 80 100 100]
+
+[Input13]
+Name='Downstream_Occupancy_Exit_2'
+Range=[0 100]
+NumMFs=3
+MF1='Clear':'trapmf',[0 0 10 30]
+MF2='Moderate':'trimf',[20 45 70]
+MF3='Congested':'trapmf',[60 80 100 100]
+
+[Input14]
+Name='Downstream_Occupancy_Exit_3'
+Range=[0 100]
+NumMFs=3
+MF1='Clear':'trapmf',[0 0 10 30]
+MF2='Moderate':'trimf',[20 45 70]
+MF3='Congested':'trapmf',[60 80 100 100]
+
+[Input15]
+Name='Downstream_Occupancy_Exit_4'
+Range=[0 100]
+NumMFs=3
+MF1='Clear':'trapmf',[0 0 10 30]
+MF2='Moderate':'trimf',[20 45 70]
+MF3='Congested':'trapmf',[60 80 100 100]
+
+[Input16]
+Name='Upper_Roundabout_Occupancy'
+Range=[0 100]
+NumMFs=3
+MF1='Clear':'trapmf',[0 0 5 15]
+MF2='Moderate':'trimf',[10 22 35]
+MF3='Congested':'trapmf',[30 40 100 100]
+
+[Input17]
+Name='Lower_Roundabout_Occupancy'
+Range=[0 100]
+NumMFs=3
+MF1='Clear':'trapmf',[0 0 5 15]
+MF2='Moderate':'trimf',[10 22 35]
+MF3='Congested':'trapmf',[30 40 100 100]
+
+
+% ---------------------------------------------------------------------------
+% [Output#] Definitions
+% Defines the control actions produced by the fuzzy system.
+% The defuzzified value from these outputs will be used to control the
+% traffic lights and roundabout entry metering.
+% ---------------------------------------------------------------------------
+[Output1]
+Name='Traffic_Light_Phase_Duration_ST_1'
+Range=[0 100]
+NumMFs=5
+MF1='Forced_Termination':'trimf',[0 5 10]
+MF2='Early_Termination':'trimf',[7 15 22]
+MF3='Normal_Termination':'trimf',[20 25 30]
+MF4='Short_Extension':'trimf',[27 35 42]
+MF5='Long_Extension':'trapmf',[40 45 50 50]
+
+[Output2]
+Name='Traffic_Light_Phase_Duration_ST_2'
+Range=[0 100]
+NumMFs=5
+MF1='Forced_Termination':'trimf',[0 5 10]
+MF2='Early_Termination':'trimf',[7 15 22]
+MF3='Normal_Termination':'trimf',[20 25 30]
+MF4='Short_Extension':'trimf',[27 35 42]
+MF5='Long_Extension':'trapmf',[40 45 50 50]
+
+[Output3]
+Name='Traffic_Light_Phase_Duration_RB_1'
+Range=[0 100]
+NumMFs=5
+MF1='Forced_Termination':'trimf',[0 10 20]
+MF2='Early_Termination':'trimf',[15 30 45]
+MF3='Normal_Termination':'trimf',[40 50 60]
+MF4='Short_Extension':'trimf',[55 70 85]
+MF5='Long_Extension':'trapmf',[80 90 100 100]
+
+[Output4]
+Name='Traffic_Light_Phase_Duration_RB_2'
+Range=[0 100]
+NumMFs=5
+MF1='Forced_Termination':'trimf',[0 10 20]
+MF2='Early_Termination':'trimf',[15 30 45]
+MF3='Normal_Termination':'trimf',[40 50 60]
+MF4='Short_Extension':'trimf',[55 70 85]
+MF5='Long_Extension':'trapmf',[80 90 100 100]
+
+[Output5]
+Name='Roundabout_Entry_Control_1'
+Range=[0 1]
+NumMFs=2
+MF1='Restrict_Entry':'trapmf',[0 0 0.2 0.5]
+MF2='Allow_Entry':'trapmf',[0.5 0.8 1 1]
+
+[Output6]
+Name='Roundabout_Entry_Control_2'
+Range=[0 1]
+NumMFs=2
+MF1='Restrict_Entry':'trapmf',[0 0 0.2 0.5]
+MF2='Allow_Entry':'trapmf',[0.5 0.8 1 1]
+
+[Output7]
+Name='Roundabout_Entry_Control_3'
+Range=[0 1]
+NumMFs=2
+MF1='Restrict_Entry':'trapmf',[0 0 0.2 0.5]
+MF2='Allow_Entry':'trapmf',[0.5 0.8 1 1]
+
+[Output8]
+Name='Roundabout_Entry_Control_4'
+Range=[0 1]
+NumMFs=2
+MF1='Restrict_Entry':'trapmf',[0 0 0.2 0.5]
+MF2='Allow_Entry':'trapmf',[0.5 0.8 1 1]
+
+
+% ---------------------------------------------------------------------------
+% [Rules] Definition
+% The core logic of the controller. Each line is one rule.
+% Format: [Input1_MF Input2_MF ...], [Output1_MF Output2_MF ...] (Weight) : Connector(1=AND, 2=OR)
+% A '0' in a position means that variable is not used in the rule.
+% ---------------------------------------------------------------------------
+[Rules]
+% --- Category 1: Gridlock Prevention (Highest Priority) ---
+% Rule 1: IF (Upper_TFR_Roundabout is High) AND (Downstream_Occupancy_Exit_1 is Congested) THEN (Rndbt_Entry_Control_1 is Restrict_Entry)
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 0, 0 0 0 0 1 0 0 0 (1) : 1
+% Rule 2: IF (Upper_TFR_Roundabout is High) AND (Downstream_Occupancy_Exit_2 is Congested) THEN (Rndbt_Entry_Control_2 is Restrict_Entry)
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 0, 0 0 0 0 0 1 0 0 (1) : 1
+% Rule 3: IF (Lower_TFR_Roundabout is High) AND (Downstream_Occupancy_Exit_3 is Congested) THEN (Rndbt_Entry_Control_3 is Restrict_Entry)
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3, 0 0 0 0 0 0 1 0 (1) : 1
+% Rule 4: IF (Lower_TFR_Roundabout is High) AND (Downstream_Occupancy_Exit_4 is Congested) THEN (Rndbt_Entry_Control_4 is Restrict_Entry)
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3, 0 0 0 0 0 0 0 1 (1) : 1
+% Rule 5: IF (Both_TFR_Roundabout is High) THEN (TL_Dur_RB_1 is Early_Termination) AND (TL_Dur_RB_2 is Early_Termination)
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 3, 0 0 2 2 0 0 0 0 (1) : 1
+% Rule 6: IF (Both_TFR_Roundabout is High) AND (Exit_Flow_Rate_Rndbt is Low) THEN (Rndbt_Entry_Control_ALL is Restrict_Entry)
+0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 3 3, 0 0 0 0 1 1 1 1 (1) : 1
+
+% --- Category 2: Prioritizing the Major Through-Road ---
+% Rule 7: IF (Pres_Car_Through_Road is High_Presence) THEN (TL_Dur_ST_1 is Long_Extension) AND (TL_Dur_ST_2 is Long_Extension)
+0 0 0 0 0 0 0 0 0 3 0 0 0 0 0 0 0, 5 5 0 0 0 0 0 0 (1) : 1
+% Rule 8: IF (Pres_Car_Through_Road is Medium_Presence) THEN (TL_Dur_ST_1 is Short_Extension) AND (TL_Dur_ST_2 is Short_Extension)
+0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 0 0, 4 4 0 0 0 0 0 0 (1) : 1
+% Rule 9: IF (Pres_Car_Through_Road is Low_Presence) THEN (TL_Dur_ST_1 is Early_Termination) AND (TL_Dur_ST_2 is Early_Termination)
+0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0, 2 2 0 0 0 0 0 0 (1) : 1
+
+% --- Category 3: Managing Roundabout and Side-Road Demand ---
+% Rule 10: IF (Occupancy_Approach_50m_1 is High) AND (TFR_Roundabout is Low) THEN (Rndbt_Entry_Control_1 is Allow_Entry)
+0 0 0 0 1 3 0 0 0 0 0 0 0 0 0 0 0, 0 0 0 0 2 0 0 0 (1) : 1
+% Rule 11: IF (Occupancy_Approach_50m_2 is High) AND (TFR_Roundabout is Low) THEN (Rndbt_Entry_Control_2 is Allow_Entry)
+0 0 0 0 1 0 3 0 0 0 0 0 0 0 0 0 0, 0 0 0 0 0 2 0 0 (1) : 1
+% Rule 12: IF (Occupancy_Approach_50m_3 is High) AND (TFR_Roundabout is Low) THEN (Rndbt_Entry_Control_3 is Allow_Entry)
+0 0 0 0 1 0 0 3 0 0 0 0 0 0 0 0 0, 0 0 0 0 0 0 2 0 (1) : 1
+% Rule 13: IF (Occupancy_Approach_50m_4 is High) AND (TFR_Roundabout is Low) THEN (Rndbt_Entry_Control_4 is Allow_Entry)
+0 0 0 0 1 0 0 0 3 0 0 0 0 0 0 0 0, 0 0 0 0 0 0 0 2 (1) : 1
+% Rule 14: IF (TFR_Roundabout is Medium) AND (TFR_Entry_Rndbt_1 is Low) THEN (Rndbt_Entry_Control_1 is Restrict_Entry)
+1 0 0 0 2 0 0 0 0 0 0 0 0 0 0 0 0, 0 0 0 0 1 0 0 0 (1) : 1
+% Rule 15: IF (TFR_Roundabout is High) THEN (TL_Dur_ST_1 is Long_Extension) AND (TL_Dur_ST_2 is Long_Extension)
+0 0 0 0 3 0 0 0 0 0 0 0 0 0 0 0 0, 5 5 0 0 0 0 0 0 (1) : 1
+
+% --- Category 4: Fairness and Balancing Competing Demands ---
+% Rule 16: IF (Pres_Car_Through_Road is High_Presence) AND (Occupancy_Approach_50m_1 is High) THEN (TL_Dur_ST_1 is Normal_Termination)
+0 0 0 0 0 3 0 0 0 3 0 0 0 0 0 0 0, 3 0 0 0 0 0 0 0 (1) : 1
+% Rule 17: IF (TFR_Entry_Rndbt_1 is High) AND (TFR_Entry_Rndbt_3 is High) THEN (TL_Dur_ST_1 is Early_Termination) AND (TL_Dur_ST_2 is Early_Termination)
+3 0 3 0 0 0 0 0 0 0 0 0 0 0 0 0 0, 2 2 0 0 0 0 0 0 (1) : 1
+% Rule 18: IF (Downstream_Occupancy_Exit_1 is Clear) AND (Exit_Flow_Rate_Rndbt is Medium) THEN (Rndbt_Entry_Control_3 is Allow_Entry)
+0 0 0 0 0 0 0 0 0 0 2 1 0 0 0 0 0, 0 0 0 0 0 0 2 0 (1) : 1
+% Rule 19: IF (TFR_Roundabout is Low) AND (TFR_Entry_Rndbt_1 is Medium) AND (Pres_Car_Through_Road is Medium_Presence) THEN (TL_Dur_ST_1 is Normal_Termination) AND (Rndbt_Entry_Control_1 is Allow_Entry)
+2 0 0 0 1 0 0 0 0 2 0 0 0 0 0 0 0, 3 0 0 0 2 0 0 0 (1) : 1
+% Rule 20: IF (TFR_Roundabout is Low) AND (TFR_Entry_Rndbt_1 is Low) AND (Pres_Car_Through_Road is Low_Presence) THEN (TL_Dur_ST_1 is Early_Termination)
+1 0 0 0 1 0 0 0 0 1 0 0 0 0 0 0 0, 2 0 0 0 0 0 0 0 (1) : 1

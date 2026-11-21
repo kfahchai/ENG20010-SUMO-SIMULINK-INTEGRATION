@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 2025-10-10 20:33:14 by Eclipse SUMO netedit Version 1.24.0
+-->
+
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
+    <!-- VTypes -->
+    <vType id="t_0" vClass="bus"/>
+    <vType id="reckless_car"
+       vClass="passenger"
+       color="1,0,0"
+       accel="4.0"
+       decel="2.0"
+       sigma="0.5"
+       length="5.0"
+       minGap="2.0"
+       maxSpeed="40"
+       speedDev="0.3"
+       lcStrategic="1.0"
+       lcSpeedGain="2.0"
+       lcCooperative="0.0">
+
+        <param key="junctionModel.ignoreRed" value="true"/>
+    </vType>
+
+
+    <!-- Routes -->
+    <route id="r_0" edges="1366750942 E8 E9 E9.16 E9.93 E10 1366750941#3"/>
+    <route id="r_1" edges="1366750939#0 E5 E6 E6.13 E6.90 E7 1366750940#0 1366750940#1 110703913#0"/>
+    <route id="r_2" edges="E29 E33 E35 E36 E37 E38 E25 E26 E27 E28 E30 E31 E32"/>
+    <!-- Vehicles, persons and containers (sorted by depart) -->
+    <flow id="f_3" type="t_0" begin="0.00" from="E11" to="E13" via="-E22 -E220 -E221" end="3600.00" vehsPerHour="10"/>
+    <flow id="f_4" type="t_0" begin="0.00" from="-E13" to="-E11" via="E22 E22.57 E22.133" end="3600.00" vehsPerHour="10"/>
+    <personFlow id="pf_0" begin="0.00" end="3600.00" probability="0.1">
+        <walk route="r_2"/>
+    </personFlow>
+    <flow type="reckless_car" id="f_0" begin="0.00" route="r_1" end="3600.00" vehsPerHour="1800"/>
+    <flow type="reckless_car" id="f_1" begin="0.00" route="r_0" end="3600.00" vehsPerHour="1800"/>
+    <flow type="reckless_car" id="f_2" begin="0.00" route="r_1" end="3600.00" vehsPerHour="1800"/>
+</routes>

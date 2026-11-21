@@ -1,0 +1,176 @@
+[System]
+Name='TrafficControlSystem'
+Type='mamdani'
+Version=2.0
+NumInputs=6
+NumOutputs=6
+NumRules=14
+AndMethod='min'
+OrMethod='max'
+ImpMethod='min'
+AggMethod='max'
+DefuzzMethod='centroid'
+
+[Input1]
+Name='PedestrianPresenceLeft'
+Range=[0 1]
+NumMFs=2
+MF1='No':'trapmf',[0 0 0.2 0.5]
+MF2='Yes':'trapmf',[0.5 0.8 1 1]
+
+[Input2]
+Name='PedestrianPresenceRight'
+Range=[0 1]
+NumMFs=2
+MF1='No':'trapmf',[0 0 0.2 0.5]
+MF2='Yes':'trapmf',[0.5 0.8 1 1]
+
+[Input3]
+Name='OccupancyStart'
+Range=[0 100]
+NumMFs=3
+MF1='Low':'trapmf',[0 0 15 30]
+MF2='Medium':'trimf',[20 45 70]
+MF3='High':'trapmf',[60 85 100 100]
+
+[Input4]
+Name='OccupancyMiddle'
+Range=[0 100]
+NumMFs=3
+MF1='Low':'trapmf',[0 0 15 30]
+MF2='Medium':'trimf',[20 45 70]
+MF3='High':'trapmf',[60 85 100 100]
+
+[Input5]
+Name='MeanSpeedStart'
+Range=[0 80]
+NumMFs=4
+MF1='Stopped':'trimf',[0 0 5]
+MF2='Slow':'trimf',[0 15 30]
+MF3='Normal':'trimf',[25 45 60]
+MF4='Fast':'trapmf',[55 70 80 80]
+
+[Input6]
+Name='MeanSpeedMiddle'
+Range=[0 80]
+NumMFs=4
+MF1='Stopped':'trimf',[0 0 5]
+MF2='Slow':'trimf',[0 15 30]
+MF3='Normal':'trimf',[25 45 60]
+MF4='Fast':'trapmf',[55 70 80 80]
+
+[Output1]
+Name='PedestrianGreenLeft'
+Range=[0 10]
+NumMFs=2
+MF1='Off':'trimf',[0 0 2]
+MF2='On':'trimf',[8 10 10]
+
+[Output2]
+Name='PedestrianGreenRight'
+Range=[0 10]
+NumMFs=2
+MF1='Off':'trimf',[0 0 2]
+MF2='On':'trimf',[8 10 10]
+
+[Output3]
+Name='EmergencyHaltLeft'
+Range=[0 1]
+NumMFs=2
+MF1='NoAction':'trimf',[0 0 0.2]
+MF2='TriggerHalt':'trimf',[0.8 1 1]
+
+[Output4]
+Name='EmergencyHaltRight'
+Range=[0 1]
+NumMFs=2
+MF1='NoAction':'trimf',[0 0 0.2]
+MF2='TriggerHalt':'trimf',[0.8 1 1]
+
+[Output5]
+Name='CarCrashDetectionLeft'
+Range=[0 1]
+NumMFs=2
+MF1='Unlikely':'trimf',[0 0 0.2]
+MF2='Likely':'trimf',[0.8 1 1]
+
+[Output6]
+Name='CarCrashDetectionRight'
+Range=[0 1]
+NumMFs=2
+MF1='Unlikely':'trimf',[0 0 0.2]
+MF2='Likely':'trimf',[0.8 1 1]
+
+[Rules]
+
+% Rule 1: Left Pedestrian ON if PedLeft = Yes AND OccupancyMiddle = Low
+2 0 0 1 0 0   2 0 0 0 0 0  1 1
+
+% Rule 2: Left Pedestrian ON if PedLeft = Yes AND OccupancyMiddle = Medium (lower priority)
+2 0 0 2 0 0   2 0 0 0 0 0  0.7 1
+
+% Rule 3: Left Pedestrian OFF if PedLeft = No
+1 0 0 0 0 0   1 0 0 0 0 0  1 1
+
+% Rule 4: Left Pedestrian OFF if OccupancyMiddle = High
+0 0 0 3 0 0   1 0 0 0 0 0  1 1
+
+% Rule 5: Right Pedestrian ON if PedRight = Yes AND OccupancyStart = Low
+0 2 1 0 0 0   0 2 0 0 0 0  1 1
+
+% Rule 6: Right Pedestrian ON if PedRight = Yes AND OccupancyStart = Medium (lower priority)
+0 2 2 0 0 0   0 2 0 0 0 0  0.7 1
+
+% Rule 7: Right Pedestrian OFF if PedRight = No
+0 1 0 0 0 0   0 1 0 0 0 0  1 1
+
+% Rule 8: Right Pedestrian OFF if OccupancyStart = High
+0 0 3 0 0 0   0 1 0 0 0 0  1 1
+
+% Rule 9: Left EmergencyHalt if SpeedMiddle = Fast
+0 0 0 0 0 4   0 0 2 0 0 0  1 1
+
+% Rule 9a: Left EmergencyHalt if SpeedMiddle = Normal
+0 0 0 0 0 3   0 0 2 0 0 0  0.5 1
+
+% Rule 9b: No Left EmergencyHalt if SpeedMiddle = Slow
+0 0 0 0 0 2   0 0 1 0 0 0  0.9 1
+
+% Rule 10: Right EmergencyHalt if SpeedStart = Fast
+0 0 0 0 4 0   0 0 0 2 0 0  1 1
+
+% Rule 10a: Right EmergencyHalt if SpeedStart = Normal
+0 0 0 0 3 0   0 0 0 2 0 0  0.5 1
+
+% Rule 10b: No Right EmergencyHalt if SpeedStart = Slow
+0 0 0 0 2 0   0 0 0 1 0 0  0.9 1
+
+% Rule 11: Left crash likely if OccupancyMiddle = High AND SpeedMiddle = Stopped
+0 0 0 3 1 0   0 0 0 0 2 0  1 1
+
+% Rule 12: Left crash likely if OccupancyMiddle = High AND SpeedMiddle = Slow
+0 0 0 3 2 0   0 0 0 0 2 0  0.8 1
+
+% Rule 13: Left crash moderate if OccupancyMiddle = Medium AND SpeedMiddle = Stopped
+0 0 0 2 1 0   0 0 0 0 2 0  0.6 1
+
+% Rule 14: Left crash moderate if OccupancyMiddle = Medium AND SpeedMiddle = Slow
+0 0 0 2 2 0   0 0 0 0 2 0  0.4 1
+
+% Rule 15: Left crash unlikely if OccupancyMiddle = Low AND SpeedMiddle = Stopped/Slow
+0 0 0 1 3 0   0 0 0 0 1 0  0.2 1
+
+% Rule 16: Right crash likely if OccupancyStart = High AND SpeedStart = Stopped
+0 0 3 0 1 0   0 0 0 0 0 2  1 1
+
+% Rule 17: Right crash likely if OccupancyStart = High AND SpeedStart = Slow
+0 0 3 0 2 0   0 0 0 0 0 2  0.8 1
+
+% Rule 18: Right crash moderate if OccupancyStart = Medium AND SpeedStart = Stopped
+0 0 2 0 1 0   0 0 0 0 0 2  0.6 1
+
+% Rule 19: Right crash moderate if OccupancyStart = Medium AND SpeedStart = Slow
+0 0 2 0 2 0   0 0 0 0 0 2  0.2 1
+
+% Rule 20: Right crash unlikely if OccupancyStart = Low AND SpeedStart = Stopped/Slow
+0 0 1 0 3 0   0 0 0 0 0 1  0.4 1

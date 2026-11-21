@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 2025-11-20 08:31:29 by Eclipse SUMO GUI Version 1.24.0
+<sumoConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
+
+    <input>
+        <net-file value="map/map.net.xml"/>
+        <route-files value="map/map.rou.xml"/>
+        <additional-files value="map/map.add.xml"/>
+    </input>
+
+    <traci_server>
+        <remote-port value="61773"/>
+    </traci_server>
+
+    <gui_only>
+        <start value="true"/>
+    </gui_only>
+
+</sumoConfiguration>
+-->
+
+<detector xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/det_e2_file.xsd">
+   <interval begin="0.00" end="300.00" id="e2_11" sampledSeconds="208.66" nVehEntered="33" nVehLeft="31" nVehSeen="33" meanSpeed="7.89" meanTimeLoss="1.14" meanOccupancy="6.34" maxOccupancy="20.00" meanMaxJamLengthInVehicles="0.04" meanMaxJamLengthInMeters="0.15" maxJamLengthInVehicles="1" maxJamLengthInMeters="4.17" jamLengthInVehiclesSum="11" jamLengthInMetersSum="45.88" meanHaltingDuration="12.00" maxHaltingDuration="12.00" haltingDurationSum="12.00" meanIntervalHaltingDuration="12.00" maxIntervalHaltingDuration="12.00" intervalHaltingDurationSum="12.00" startedHalts="1.00" meanVehicleNumber="0.78" maxVehicleNumber="3" />
+   <interval begin="300.00" end="468.00" id="e2_11" sampledSeconds="814.39" nVehEntered="22" nVehLeft="23" nVehSeen="24" meanSpeed="1.45" meanTimeLoss="28.89" meanOccupancy="44.25" maxOccupancy="71.99" meanMaxJamLengthInVehicles="3.29" meanMaxJamLengthInMeters="20.51" maxJamLengthInVehicles="8" maxJamLengthInMeters="50.00" jamLengthInVehiclesSum="552" jamLengthInMetersSum="3445.24" meanHaltingDuration="63.55" maxHaltingDuration="97.00" haltingDurationSum="572.00" meanIntervalHaltingDuration="62.22" maxIntervalHaltingDuration="85.00" intervalHaltingDurationSum="560.00" startedHalts="8.00" meanVehicleNumber="4.98" maxVehicleNumber="8" />
+</detector>
